@@ -1,0 +1,50 @@
+name: Refrescar datos (Banco Mundial · Maddison · PWT)
+
+# Regenera catálogo e indicadores desde la API del Banco Mundial + Maddison + PWT.
+# Mensual + manual.
+on:
+  schedule:
+    - cron: "0 6 1 * *"   # día 1 de cada mes, 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Dependencias
+        run: pip install pandas openpyxl
+
+      - name: Barrido de cobertura (WDI + WGI + extras)
+        run: |
+          python scripts/coverage_sweep.py --sources 2
+          python scripts/coverage_sweep.py --sources 3 --merge
+          python scripts/sweep_extra_ids.py HD.HCI.OVRL SH.STA.OWAD.ZS
+
+      - name: Crosswalk, regiones y catálogo
+        run: |
+          python scripts/build_crosswalk.py
+          python scripts/build_regions.py
+          python scripts/curate_catalog.py
+
+      - name: Generar indicadores (Banco Mundial)
+        run: python scripts/build_indicators.py --from-catalog
+
+      - name: Series históricas (Maddison + PWT)
+        run: |
+          python scripts/build_maddison.py
+          python scripts/build_pwt.py
+
+      - name: Commit si hay cambios
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add data/
+          git diff --cached --quiet || git commit -m "Datos: refresco automático $(date -u +%Y-%m-%d)"
+          git push

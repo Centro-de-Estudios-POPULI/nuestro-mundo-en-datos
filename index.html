@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nuestro Mundo en Datos — Atlas mundial en español · POPULI</title>
+<meta name="description" content="Atlas interactivo de datos mundiales en español, para investigadores. Mapas, correlaciones y tendencias del progreso humano. Inspirado en Our World in Data y Gapminder. Centro de Estudios POPULI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Zilla+Slab:ital,wght@0,400;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="src/styles.css">
+</head>
+<body>
+
+<!-- ===== NAVBAR (estilo inflación: barra roja sticky) ===== -->
+<header class="navbar" id="nav">
+  <div class="navbar-inner">
+    <a class="nav-left" href="#inicio" aria-label="Nuestro Mundo en Datos — POPULI">
+      <svg viewBox="0 0 310 130" class="logo-svg" aria-hidden="true">
+        <text x="6" y="112" font-family="'Playfair Display',serif" font-size="145" font-weight="700" class="logo-p">P</text>
+        <text x="92" y="87" font-family="'Playfair Display',serif" font-size="55" font-style="italic" class="logo-opuli">opuli</text>
+      </svg>
+      <span class="nav-divider"></span>
+      <span class="brand-sub">Nuestro Mundo en Datos</span>
+    </a>
+    <nav class="nav-links" aria-label="Navegación">
+      <a href="#mapas">Mapas</a>
+      <a href="#correlaciones">Correlaciones</a>
+      <a href="#progreso">Un mundo mejor</a>
+      <a href="#acerca">Acerca</a>
+    </nav>
+    <div class="nav-right">
+      <a class="nav-ext" href="https://populi.bo" target="_blank" rel="noopener">populi.bo ↗</a>
+      <a href="https://www.instagram.com/populi.bo" target="_blank" rel="noopener" aria-label="Instagram" class="soc">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.64-.07-4.85s.01-3.58.07-4.85c.15-3.23 1.66-4.77 4.92-4.92C8.42 2.17 8.8 2.16 12 2.16zm0 3.68A6.16 6.16 0 1 0 12 18.16 6.16 6.16 0 0 0 12 5.84zm0 10.16A4 4 0 1 1 12 8a4 4 0 0 1 0 8zm6.41-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg>
+      </a>
+      <button class="menu-btn" id="menuBtn" aria-label="Menú">☰</button>
+    </div>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="#mapas">Mapas</a><a href="#correlaciones">Correlaciones</a>
+    <a href="#progreso">Un mundo mejor</a><a href="#acerca">Acerca</a>
+    <a href="https://populi.bo" target="_blank" rel="noopener">populi.bo ↗</a>
+  </div>
+</header>
+
+<!-- ===== HERO (estilo galería: navy + partículas interactivas) ===== -->
+<section class="hero" id="inicio">
+  <canvas id="particles" aria-hidden="true"></canvas>
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="hero-inner centered">
+    <span class="eyebrow"><span class="diamond"></span> Datos abiertos del mundo · en español</span>
+    <h1>Nuestro Mundo en <span class="ital">Datos</span></h1>
+    <p class="hero-motto">Entender el mundo a través de los datos es el primer paso para mejorarlo. Cientos de indicadores, mapas y correlaciones —<strong>en español</strong>— para investigadores, periodistas y para cualquiera que quiera ver el mundo como realmente es.</p>
+    <div class="hero-ctas">
+      <a class="cta cta-primary" href="#mapas">Explorar los mapas
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </a>
+      <a class="cta cta-secondary" href="#correlaciones">Ver correlaciones</a>
+    </div>
+    <div class="stats">
+      <span><b data-count="207">0</b> indicadores</span><span class="sep"></span>
+      <span><b data-count="217">0</b> países</span><span class="sep"></span>
+      <span><b data-count="15">0</b> temas</span><span class="sep"></span>
+      <span>1820–2025</span>
+    </div>
+  </div>
+  <div class="hero-fade" aria-hidden="true"></div>
+</section>
+
+<!-- ===== SECCIÓN MAPAS ===== -->
+<section class="section" id="mapas">
+  <div class="sec-head">
+    <span class="kicker">Atlas coroplético</span>
+    <h2>Mapas del mundo</h2>
+    <p>189 indicadores · 217 países · del Banco Mundial. Elige un indicador, recorre los años y pasa el cursor por cada país.</p>
+  </div>
+  <div class="explorer">
+    <aside class="sidebar" id="sidebar">
+      <div class="search"><input id="q" type="search" placeholder="Buscar indicador…" autocomplete="off"></div>
+      <div id="catlist"></div>
+    </aside>
+    <div class="stage">
+      <div class="titlebar">
+        <h3 id="indTitle">Selecciona un indicador</h3>
+        <div class="sub" id="indSub">189 indicadores · 217 países</div>
+        <div class="src" id="indSrc"></div>
+        <details class="defbox" id="defBox" style="display:none">
+          <summary>ℹ️ ¿Qué mide y cómo se calcula?</summary>
+          <div class="defpop">
+            <p id="defText"></p>
+            <div class="deforg" id="defOrg"></div>
+          </div>
+        </details>
+      </div>
+      <div class="controls" id="controls" style="display:none">
+        <div class="yr" id="yrLabel">—</div>
+        <input id="yr" type="range" min="0" max="0" value="0">
+        <button class="btn" id="playBtn" title="Animar">▶</button>
+        <label class="toggle"><input type="checkbox" id="latest"> Último dato por país</label>
+      </div>
+      <div class="mapwrap">
+        <svg id="map" preserveAspectRatio="xMidYMid meet"></svg>
+        <div class="legend" id="legend" style="display:none">
+          <div class="lt" id="legendTitle"></div>
+          <div class="bins" id="legendBins"></div>
+          <div class="ticks" id="legendTicks"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECCIÓN CORRELACIONES (Gapminder) ===== -->
+<section class="section alt" id="correlaciones">
+  <div class="sec-head">
+    <span class="kicker">A la manera de Gapminder</span>
+    <h2>Correlaciones</h2>
+    <p>Cruza dos indicadores cualesquiera. Cada burbuja es un país; su tamaño, la población; su color, la región. Mueve el año y mira cómo se desplaza el mundo.</p>
+  </div>
+  <div class="scatter-wrap">
+    <div class="scatter-controls">
+      <label>Eje X
+        <select id="scX"></select>
+        <span class="logtog"><input type="checkbox" id="scLogX"> escala log</span>
+      </label>
+      <label>Eje Y
+        <select id="scY"></select>
+        <span class="logtog"><input type="checkbox" id="scLogY"> escala log</span>
+      </label>
+    </div>
+    <div class="scatter-stage">
+      <svg id="scSvg"></svg>
+      <div class="legend reg" id="scLegend"></div>
+    </div>
+    <div class="scatter-time">
+      <div class="yr" id="scYearLabel">—</div>
+      <input id="scYear" type="range" min="0" max="0" value="0">
+      <button class="btn" id="scPlay" title="Animar">▶</button>
+      <span class="scatter-hint">Tamaño de burbuja = población</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECCIÓN UN MUNDO MEJOR ===== -->
+<section class="section" id="progreso">
+  <div class="sec-head">
+    <span class="kicker">La gran historia que no se cuenta</span>
+    <h2>Vivimos en un mundo mejor</h2>
+    <p>No es optimismo ingenuo: es lo que muestran los datos. En las últimas décadas la humanidad avanzó en casi todos los frentes del bienestar. Estas son algunas tendencias globales.</p>
+  </div>
+
+  <blockquote class="factquote" id="factquote">
+    <p>“A Hans le habría encantado promocionar este libro y lo habría hecho de manera brillante, pero supo, desde el momento de su diagnóstico, que ello no sería posible. De modo que nos corresponde a nosotros continuar su misión y la nuestra. El sueño de Hans de una visión del mundo basada en datos reales sigue vivo en nosotros y, esperamos, que siga también vivo en ti.”</p>
+    <cite>— Ola Rosling y Anna Rosling Rönnlund, nota final de <i>Factfulness</i> (2018)</cite>
+  </blockquote>
+
+  <div class="trend-grid" id="trendGrid"></div>
+  <p class="trend-note">Series del agregado mundial del Banco Mundial. Para horizontes más largos —desde 1820— explora el <b>PIB per cápita histórico</b> del Maddison Project y los indicadores de la <b>Penn World Table</b> en la sección <a href="#mapas">Mapas</a>.</p>
+</section>
+
+<!-- ===== SECCIÓN ACERCA ===== -->
+<section class="section alt" id="acerca">
+  <div class="sec-head">
+    <span class="kicker">Por qué existe este proyecto</span>
+    <h2>Acerca</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-col">
+      <h3>Datos del mundo, en nuestro idioma</h3>
+      <p><b>Our World in Data</b>, <b>Gapminder</b> y los grandes índices globales transformaron el acceso público a los datos del mundo — pero casi siempre en inglés. Pese a lo extendido del idioma, sigue siendo una barrera real para millones de hispanohablantes. <i>Nuestro Mundo en Datos</i> retoma esa misión y la traduce —literal y editorialmente— al español.</p>
+      <p>Es un proyecto del <b>Centro de Estudios POPULI</b>, con datos abiertos y reproducibles.</p>
+    </div>
+    <div class="about-col">
+      <h3>Fuentes</h3>
+      <ul class="src-list">
+        <li><a href="https://data.worldbank.org" target="_blank" rel="noopener">Banco Mundial</a> — Indicadores del Desarrollo Mundial (WDI) y de Gobernanza (WGI) · CC BY 4.0</li>
+        <li><a href="https://www.rug.nl/ggdc/historicaldevelopment/maddison/releases/maddison-project-database-2023" target="_blank" rel="noopener">Maddison Project Database 2023</a> — PIB per cápita histórico desde 1820 · CC BY 4.0</li>
+        <li><a href="https://www.rug.nl/ggdc/productivity/pwt/" target="_blank" rel="noopener">Penn World Table 10.01</a> — productividad, capital humano y horas trabajadas · CC BY 4.0</li>
+        <li>Otros índices mundiales (V-Dem, etc.) <i>(en hoja de ruta)</i></li>
+      </ul>
+      <p class="about-thanks">Con reconocimiento y gratitud a Our World in Data y a la fundación Gapminder de Hans, Ola y Anna Rosling, cuyo trabajo inspiró este proyecto.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="foot">
+  <div class="foot-inner">
+    <div class="foot-brand">
+      <div class="logo">
+        <svg viewBox="0 0 310 130" class="logo-svg" aria-hidden="true">
+          <text x="6" y="112" font-family="'Playfair Display',serif" font-size="145" font-weight="700" fill="#C00000">P</text>
+          <text x="92" y="87" font-family="'Playfair Display',serif" font-size="55" font-style="italic" fill="#F5EFE0">opuli</text>
+        </svg>
+      </div>
+      <p>Centro de estudios de políticas públicas comprometido con la libertad económica y el desarrollo de Bolivia.</p>
+    </div>
+    <div class="foot-col">
+      <h4>Proyecto</h4>
+      <a href="#mapas">Mapas</a><a href="#correlaciones">Correlaciones</a>
+      <a href="#progreso">Un mundo mejor</a><a href="#acerca">Acerca</a>
+    </div>
+    <div class="foot-col">
+      <h4>POPULI</h4>
+      <a href="https://populi.bo" target="_blank" rel="noopener">Sitio principal</a>
+      <a href="https://www.instagram.com/populi.bo" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://x.com/PopuliBO" target="_blank" rel="noopener">X / Twitter</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 Fundación Populi · La Paz, Bolivia</span>
+    <span>Datos: Banco Mundial · Maddison Project · Penn World Table (CC BY 4.0) · Inspirado en Our World in Data y Gapminder</span>
+  </div>
+</footer>
+
+<div class="tip" id="tip"></div>
+<div class="tip" id="scTip"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+<script src="src/hero.js"></script>
+<script src="src/atlas.js"></script>
+<script src="src/scatter.js"></script>
+<script src="src/trends.js"></script>
+</body>
+</html>
