@@ -1,0 +1,175 @@
+{
+  "_meta": {
+    "descripcion": "Catálogo de indicadores de Our World in Data a incorporar al atlas (fase OWID). Enfocado en lo social/político/bienestar que el Banco Mundial NO cubre, para no duplicar los 207 actuales.",
+    "verificado": "Slugs y owidVariableId verificados contra ourworldindata.org/grapher/{slug}.metadata.json el 2026-06-15.",
+    "fetch_csv": "https://ourworldindata.org/grapher/{slug}.csv?csvType=full&useColumnShortNames=true",
+    "fetch_meta": "https://ourworldindata.org/grapher/{slug}.metadata.json",
+    "licencia": "CC BY (OWID). Las fuentes de terceros conservan su licencia: V-Dem, PNUD, RSF, Transparency International, World Happiness Report/Gallup, IHME, START, Ember, Barro-Lee. Atribución obligatoria.",
+    "notas_scraper": [
+      "Mapear la entidad OWID (nombre de país en inglés) -> ISO3 con un crosswalk; reusar el esquema de build_indicators: {indicator,name,source,years:[],data:{ISO3:[...]}}.",
+      "DESCARTAR agregados (World, regiones, grupos de ingreso) igual que en el resto del atlas; OWID los marca con code de continente/region.",
+      "id propuesto = 'OWID.' + slug (seguro como nombre de archivo data/indicators/<id>.json).",
+      "Agregar al catalog.json con los campos scale/direction/family ya incluidos aquí.",
+      "Categorías nuevas sugeridas: 'Democracia y derechos' y 'Paz y conflicto' (OWID es fuerte ahí y diferencia del Banco Mundial)."
+    ]
+  },
+  "indicadores": [
+    {
+      "id": "OWID.electoral-democracy-index",
+      "owid_slug": "electoral-democracy-index",
+      "owid_var_id": 1209753,
+      "name": "Índice de democracia electoral",
+      "unit": "índice 0–1",
+      "category": "Democracia y derechos",
+      "scale": "secuencial", "direction": "mejor", "family": "verde",
+      "org": "V-Dem (Varieties of Democracy)",
+      "def": "Mide en qué grado los líderes políticos son electos mediante sufragio amplio en elecciones libres y justas, de 0 (menos democrático) a 1 (más democrático)."
+    },
+    {
+      "id": "OWID.political-regime",
+      "owid_slug": "political-regime",
+      "owid_var_id": 1210053,
+      "name": "Tipo de régimen político",
+      "unit": "categorías 0–3",
+      "category": "Democracia y derechos",
+      "scale": "secuencial", "direction": "mejor", "family": "verde",
+      "categorico": true,
+      "def": "Clasifica el régimen en cuatro categorías: autocracia cerrada (0), autocracia electoral (1), democracia electoral (2) y democracia liberal (3). Conviene mostrarlo con 4 colores discretos (no rampa).",
+      "nota": "CATEGÓRICO (4 clases) — requiere leyenda discreta, manejo aparte del cuantil."
+    },
+    {
+      "id": "OWID.human-rights-index-vdem",
+      "owid_slug": "human-rights-index-vdem",
+      "owid_var_id": 1209710,
+      "name": "Índice de derechos humanos",
+      "unit": "índice 0–1",
+      "category": "Democracia y derechos",
+      "scale": "secuencial", "direction": "mejor", "family": "verde",
+      "org": "V-Dem (Varieties of Democracy)",
+      "def": "Grado en que las personas están libres de tortura, ejecuciones políticas y trabajo forzado, y gozan de derechos de propiedad y libertades, de 0 a 1 (más derechos)."
+    },
+    {
+      "id": "OWID.press-freedom-rsf",
+      "owid_slug": "press-freedom-rsf",
+      "owid_var_id": 1206559,
+      "name": "Libertad de prensa",
+      "unit": "índice 0–100",
+      "category": "Democracia y derechos",
+      "scale": "secuencial", "direction": "peor", "family": "calido",
+      "org": "Reporteros Sin Fronteras (RSF)",
+      "def": "Índice de RSF sobre el entorno para el periodismo. En esta convención un puntaje más bajo es mejor (Buena 0–15 … Muy grave 55–100).",
+      "nota": "⚠ Verificar la dirección con los datos reales: RSF ha usado dos convenciones (puntaje alto = mejor / o = peor)."
+    },
+    {
+      "id": "OWID.corruption-perception-index",
+      "owid_slug": "corruption-perception-index",
+      "owid_var_id": 1032554,
+      "name": "Índice de percepción de la corrupción",
+      "unit": "índice 0–100",
+      "category": "Democracia y derechos",
+      "scale": "secuencial", "direction": "mejor", "family": "verde",
+      "org": "Transparency International",
+      "def": "Percepción del nivel de corrupción del sector público, de 0 (muy corrupto) a 100 (muy transparente). Más alto = mejor."
+    },
+    {
+      "id": "OWID.human-development-index",
+      "owid_slug": "human-development-index",
+      "owid_var_id": 1032439,
+      "name": "Índice de Desarrollo Humano (IDH)",
+      "unit": "índice 0–1",
+      "category": "Desarrollo humano y bienestar",
+      "scale": "secuencial", "direction": "mejor", "family": "verde",
+      "org": "PNUD — Informe sobre Desarrollo Humano",
+      "def": "Medida resumen de tres dimensiones: vida larga y saludable, educación y nivel de vida digno, de 0 a 1 (mayor desarrollo)."
+    },
+    {
+      "id": "OWID.gender-inequality-index-from-the-human-development-report",
+      "owid_slug": "gender-inequality-index-from-the-human-development-report",
+      "owid_var_id": 1032418,
+      "name": "Índice de Desigualdad de Género",
+      "unit": "índice 0–1",
+      "category": "Desarrollo humano y bienestar",
+      "scale": "secuencial", "direction": "peor", "family": "calido",
+      "org": "PNUD — Informe sobre Desarrollo Humano",
+      "def": "Desigualdad entre mujeres y hombres en salud reproductiva, empoderamiento y mercado laboral, de 0 (igualdad) a 1 (máxima desigualdad). Más alto = peor."
+    },
+    {
+      "id": "OWID.happiness-cantril-ladder",
+      "owid_slug": "happiness-cantril-ladder",
+      "owid_var_id": 1210090,
+      "name": "Satisfacción con la vida",
+      "unit": "escala 0–10",
+      "category": "Desarrollo humano y bienestar",
+      "scale": "secuencial", "direction": "mejor", "family": "verde",
+      "org": "World Happiness Report (encuesta Gallup)",
+      "def": "Promedio de la 'escalera de Cantril': los encuestados ubican su vida actual de 0 (peor vida posible) a 10 (mejor posible)."
+    },
+    {
+      "id": "OWID.mean-years-of-schooling-long-run",
+      "owid_slug": "mean-years-of-schooling-long-run",
+      "owid_var_id": 809139,
+      "name": "Años promedio de escolaridad",
+      "unit": "años",
+      "category": "Educación",
+      "scale": "secuencial", "direction": "mejor", "family": "verde",
+      "org": "Barro y Lee (2015); Lee y Lee (2016)",
+      "def": "Promedio de años de educación formal de la población de 15 a 64 años. Serie histórica larga (desde 1870), con más es mejor."
+    },
+    {
+      "id": "OWID.self-reported-trust-attitudes",
+      "owid_slug": "self-reported-trust-attitudes",
+      "owid_var_id": 1076233,
+      "name": "Confianza interpersonal",
+      "unit": "% de la población",
+      "category": "Gobernanza y sociedad",
+      "scale": "secuencial", "direction": "mejor", "family": "verde",
+      "org": "Integrated Values Surveys (World Values Survey + European Values Study)",
+      "def": "Porcentaje que está de acuerdo con que 'se puede confiar en la mayoría de las personas'. Indicador de capital social; dato de encuesta (cobertura irregular)."
+    },
+    {
+      "id": "OWID.terrorism-deaths",
+      "owid_slug": "terrorism-deaths",
+      "owid_var_id": 738647,
+      "name": "Muertes por terrorismo",
+      "unit": "personas",
+      "category": "Paz y conflicto",
+      "scale": "secuencial", "direction": "peor", "family": "calido",
+      "type": "abs",
+      "org": "START — Global Terrorism Database",
+      "def": "Muertes confirmadas por atentados terroristas (víctimas y atacantes). Total absoluto; más alto = peor."
+    },
+    {
+      "id": "OWID.share-electricity-low-carbon",
+      "owid_slug": "share-electricity-low-carbon",
+      "owid_var_id": 1227992,
+      "name": "Electricidad de fuentes bajas en carbono",
+      "unit": "% de la generación",
+      "category": "Energía",
+      "scale": "secuencial", "direction": "mejor", "family": "verde",
+      "org": "Ember; Energy Institute — Statistical Review of World Energy",
+      "def": "Proporción de la electricidad generada con fuentes renovables y nuclear, que emiten mucho menos gases de efecto invernadero que los fósiles."
+    }
+  ],
+  "candidatos_por_verificar_slug": [
+    {
+      "name": "Tasa de mortalidad por conflictos armados",
+      "category": "Paz y conflicto",
+      "org": "UCDP / IHME",
+      "nota": "El slug 'death-rates-from-conflict-and-terrorism' y 'death-rate-in-armed-conflicts-and-one-sided-violence' dieron 404. Buscar el slug vigente (UCDP) antes de incorporar."
+    },
+    {
+      "name": "Suministro calórico diario por persona",
+      "category": "Desarrollo humano y bienestar",
+      "org": "FAO",
+      "nota": "El slug 'daily-caloric-supply-per-person' dio 404. Buscar el slug vigente (FAO/OWID) antes de incorporar."
+    }
+  ],
+  "no_redistribuibles": [
+    {
+      "name": "Prevalencia de trastornos depresivos",
+      "owid_slug": "share-with-depression -> depressive-disorders-prevalence-ihme",
+      "org": "IHME — Global Burden of Disease",
+      "motivo": "OWID responde HTTP 403: 'non-redistributable data ... cannot be downloaded as a CSV'. La licencia de IHME no permite re-compartir el CSV. Aplica a TODA fuente IHME/GBD (depresión, y probablemente mortalidad por conflictos de IHME)."
+    }
+  ]
+}

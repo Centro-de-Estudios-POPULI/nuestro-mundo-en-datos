@@ -60,10 +60,10 @@
       <a class="cta cta-secondary" href="#correlaciones">Ver correlaciones</a>
     </div>
     <div class="stats">
-      <span><b data-count="207">0</b> indicadores</span><span class="sep"></span>
+      <span><b data-count="224">0</b> indicadores</span><span class="sep"></span>
       <span><b data-count="217">0</b> países</span><span class="sep"></span>
-      <span><b data-count="15">0</b> temas</span><span class="sep"></span>
-      <span>1820–2025</span>
+      <span><b data-count="18">0</b> temas</span><span class="sep"></span>
+      <span>1789–2025</span>
     </div>
   </div>
   <div class="hero-fade" aria-hidden="true"></div>
@@ -74,7 +74,7 @@
   <div class="sec-head">
     <span class="kicker">Atlas coroplético</span>
     <h2>Mapas del mundo</h2>
-    <p>207 indicadores · 217 países · del Banco Mundial. Elige un indicador, recorre los años y pasa el cursor por cada país.</p>
+    <p>224 indicadores · 217 países · de fuentes abiertas (Banco Mundial, Our World in Data, Fraser Institute y más). Elige un indicador, recorre los años y pasa el cursor por cada país.</p>
   </div>
   <div class="explorer">
     <aside class="sidebar" id="sidebar">
@@ -103,13 +103,19 @@
       <div class="mapwrap">
         <svg id="map" preserveAspectRatio="xMidYMid meet"></svg>
         <div class="legend" id="legend" style="display:none">
-          <div class="lt" id="legendTitle"></div>
-          <div class="bins" id="legendBins"></div>
-          <div class="ticks" id="legendTicks"></div>
+          <div class="leg-nodata">
+            <span class="leg-cap">Sin dato</span>
+            <span class="leg-nd-sw"></span>
+          </div>
+          <div class="leg-scale">
+            <div class="leg-ticks" id="legendTicks"></div>
+            <div class="leg-bar" id="legendBins"></div>
+          </div>
         </div>
       </div>
     </div>
   </div>
+    <p class="map-sources">Datos de <a href="https://data.worldbank.org" target="_blank" rel="noopener">Banco Mundial</a>, <a href="https://ourworldindata.org" target="_blank" rel="noopener">Our World in Data</a> (y las fuentes que reúne), <a href="https://www.fraserinstitute.org/economic-freedom" target="_blank" rel="noopener">Fraser Institute</a>, <a href="https://www.rug.nl/ggdc/historicaldevelopment/maddison/" target="_blank" rel="noopener">Maddison Project</a> y <a href="https://www.rug.nl/ggdc/productivity/pwt/" target="_blank" rel="noopener">Penn World Table</a>. Cada mapa muestra su fuente puntual arriba; el detalle completo y los agradecimientos están en <a href="#acerca">Acerca</a>.</p>
 </section>
 
 <!-- ===== SECCIÓN CORRELACIONES (Gapminder) ===== -->
@@ -173,14 +179,20 @@
       <p>Es un proyecto del <b>Centro de Estudios POPULI</b>, con datos abiertos y reproducibles.</p>
     </div>
     <div class="about-col">
-      <h3>Fuentes</h3>
+      <h3>Fuentes y agradecimientos</h3>
+      <p>Este atlas no genera datos: los reúne, traduce al español y los cartografía. Existe gracias al trabajo abierto de muchas instituciones, a las que reconocemos con gratitud. Cada mapa cita su fuente puntual; estas son las casas de datos detrás del proyecto:</p>
       <ul class="src-list">
-        <li><a href="https://data.worldbank.org" target="_blank" rel="noopener">Banco Mundial</a> — Indicadores del Desarrollo Mundial (WDI) y de Gobernanza (WGI) · CC BY 4.0</li>
-        <li><a href="https://www.rug.nl/ggdc/historicaldevelopment/maddison/releases/maddison-project-database-2023" target="_blank" rel="noopener">Maddison Project Database 2023</a> — PIB per cápita histórico desde 1820 · CC BY 4.0</li>
-        <li><a href="https://www.rug.nl/ggdc/productivity/pwt/" target="_blank" rel="noopener">Penn World Table 10.01</a> — productividad, capital humano y horas trabajadas · CC BY 4.0</li>
-        <li>Otros índices mundiales (V-Dem, etc.) <i>(en hoja de ruta)</i></li>
+        <li><a href="https://data.worldbank.org" target="_blank" rel="noopener">Banco Mundial</a> — Indicadores del Desarrollo Mundial (WDI) y de Gobernanza (WGI)</li>
+        <li><a href="https://ourworldindata.org" target="_blank" rel="noopener">Our World in Data</a> — portal que armoniza y comparte gran parte de estos datos</li>
+        <li><a href="https://www.fraserinstitute.org/economic-freedom" target="_blank" rel="noopener">Fraser Institute</a> — Índice de Libertad Económica del Mundo (EFW)</li>
+        <li><a href="https://v-dem.net" target="_blank" rel="noopener">V-Dem</a> — democracia electoral y derechos humanos</li>
+        <li><a href="https://hdr.undp.org" target="_blank" rel="noopener">PNUD</a> — Índice de Desarrollo Humano y desigualdad de género</li>
+        <li><a href="https://www.transparency.org/en/cpi" target="_blank" rel="noopener">Transparency International</a> — percepción de la corrupción</li>
+        <li><a href="https://rsf.org" target="_blank" rel="noopener">Reporteros Sin Fronteras</a> — libertad de prensa · <a href="https://worldhappiness.report" target="_blank" rel="noopener">World Happiness Report</a> — satisfacción con la vida</li>
+        <li><a href="https://www.worldvaluessurvey.org" target="_blank" rel="noopener">World &amp; European Values Survey</a> — confianza · <a href="http://www.barrolee.com" target="_blank" rel="noopener">Barro-Lee</a> — escolaridad · <a href="https://www.start.umd.edu/gtd/" target="_blank" rel="noopener">START</a> — terrorismo · <a href="https://ember-energy.org" target="_blank" rel="noopener">Ember</a> — energía</li>
+        <li><a href="https://www.rug.nl/ggdc/historicaldevelopment/maddison/" target="_blank" rel="noopener">Maddison Project 2023</a> y <a href="https://www.rug.nl/ggdc/productivity/pwt/" target="_blank" rel="noopener">Penn World Table 10.01</a> — historia económica de largo plazo</li>
       </ul>
-      <p class="about-thanks">Con reconocimiento y gratitud a Our World in Data y a la fundación Gapminder de Hans, Ola y Anna Rosling, cuyo trabajo inspiró este proyecto.</p>
+      <p class="about-thanks">Con especial gratitud a <b>Our World in Data</b> y a la fundación <b>Gapminder</b> de Hans, Ola y Anna Rosling: su misión de que cualquiera pueda ver el mundo como realmente es —con datos, no con miedos— inspira cada página de este proyecto. Datos abiertos bajo licencias CC BY y equivalentes; las fuentes de terceros conservan su licencia original.</p>
     </div>
   </div>
 </section>
@@ -211,7 +223,7 @@
   </div>
   <div class="foot-bottom">
     <span>© 2026 Fundación Populi · La Paz, Bolivia</span>
-    <span>Datos: Banco Mundial · Maddison Project · Penn World Table (CC BY 4.0) · Inspirado en Our World in Data y Gapminder</span>
+    <span>Datos: Banco Mundial · Our World in Data · Fraser Institute · V-Dem · PNUD · Maddison · Penn World Table y más (CC BY) · Inspirado en Our World in Data y Gapminder</span>
   </div>
 </footer>
 

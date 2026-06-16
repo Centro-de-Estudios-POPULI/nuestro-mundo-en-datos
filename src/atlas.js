@@ -6,17 +6,31 @@
   const svg = d3.select("#map");
   const gMap = svg.append("g");
   const tip = d3.select("#tip");
-  const fmt = (v, unit) => {
+  // ---- formato de números (español) ----
+  // compacto para la leyenda (termómetro): 150k · 100M · 1,4 mil M · 12,3 B
+  function fmtTick(v, suf) {
+    if (v == null || isNaN(v)) return "";
+    let u = "";
+    const a = Math.abs(v);
+    if (a >= 1e12) { v /= 1e12; u = " B"; }
+    else if (a >= 1e9) { v /= 1e9; u = " mil M"; }
+    else if (a >= 1e6) { v /= 1e6; u = "M"; }
+    else if (a >= 1e3) { v /= 1e3; u = "k"; }
+    const sa = Math.abs(v);
+    const d = u ? 1 : (sa >= 100 ? 0 : sa >= 1 ? 1 : 2);
+    let s = v.toFixed(d);
+    if (s.indexOf(".") >= 0) s = s.replace(/0+$/, "").replace(/\.$/, "");
+    return s.replace(".", ",") + u + (suf || "");
+  }
+  // completo para el tooltip: miles con "." y decimal con "," (1.234,5);
+  // de un millón en adelante usa el compacto para no alargar.
+  function fmt(v) {
     if (v == null || isNaN(v)) return "s/d";
-    const abs = Math.abs(v);
-    let s;
-    if (abs >= 1e9) s = (v / 1e9).toFixed(1) + " mil M";
-    else if (abs >= 1e6) s = (v / 1e6).toFixed(1) + " M";
-    else if (abs >= 1000) s = d3.format(",.0f")(v);
-    else if (abs >= 1) s = d3.format(",.1f")(v);
-    else s = d3.format(",.2f")(v);
-    return s.replace(/\B(?=(\d{3})+(?!\d))/g, " ").replace(".", ",");
-  };
+    const a = Math.abs(v);
+    if (a >= 1e6) return fmtTick(v);
+    const dd = a >= 100 ? 0 : a >= 1 ? 1 : 2;
+    return d3.format(`,.${dd}f`)(v).replace(/,/g, "·").replace(".", ",").replace(/·/g, ".");
+  }
 
   const state = {
     catalog: null, crosswalk: null, countries: null, sphere: null,
@@ -152,7 +166,7 @@
       document.getElementById("indSub").textContent =
         `${meta.unit} · ${meta.category} · cobertura ${Math.round(meta.coverage_pct)}%`;
       document.getElementById("indSrc").textContent =
-        `${meta.wb_name} — ${meta.source || state.catalog.source_default}`;
+        "Fuente: " + (meta.org || state.catalog.source_default);
       const db = document.getElementById("defBox");
       if (meta.def) {
         document.getElementById("defText").textContent = meta.def;
@@ -164,37 +178,63 @@
     });
   }
 
-  // Escala de color: divergente si cruza 0; si no, secuencial por cuantiles
+  // ---- escala de color: rampas de marca POPULI ----
+  const RAMPS = {
+    calido:     ["#F6E6BE", "#E6B24A", "#CF7B33", "#B23A2C", "#8B1A1A", "#5E1010"],
+    rojo:       ["#F3D9D2", "#D98E80", "#BC4B3F", "#8B1A1A", "#5E1010"],
+    azul:       ["#E6EAEF", "#A9B7C6", "#647D97", "#3A516B", "#22344A"],
+    verde:      ["#E3EDEA", "#9AC4B9", "#4F9E90", "#2C7468", "#16504A"],
+    divergente: ["#3A516B", "#7E94A8", "#EFE7D6", "#CB7A6D", "#8B1A1A"],
+  };
+  const NBINS = 7;
+  const rampColors = (name, n) => {
+    const ip = d3.interpolateRgbBasis(RAMPS[name] || RAMPS.calido);
+    return d3.range(n).map(i => ip(n === 1 ? 0.5 : i / (n - 1)));
+  };
+
+  // scale "divergente" -> anclada en 0 (slate-crema-rojo); si no, secuencial por
+  // cuantiles con la familia de marca del indicador (verde/calido/azul) según valencia.
   function buildColor(raw, meta) {
+    // SOLO países reales: excluir los agregados del Banco Mundial (Mundo, regiones y
+    // grupos de ingreso: WLD, HIC, EUU, OED…). No se dibujan en el mapa, pero
+    // contaminaban la escala/leyenda (p. ej. población mundial = 8,1 mil M).
+    const reg = state.regions || {};
     const vals = [];
-    for (const k in raw.data) for (const v of raw.data[k]) if (v != null) vals.push(v);
+    for (const k in raw.data) {
+      if (!(k in reg)) continue;
+      for (const v of raw.data[k]) if (v != null) vals.push(v);
+    }
     vals.sort(d3.ascending);
     const ext = [vals[0], vals[vals.length - 1]];
-    const diverging = ext[0] < 0 && ext[1] > 0 && meta.type !== "abs";
-    if (diverging) {
-      const m = Math.max(Math.abs(ext[0]), Math.abs(ext[1]));
-      const t = [-m, -m * .6, -m * .25, -m * .07, m * .07, m * .25, m * .6, m];
-      const cols = d3.schemeRdBu[8].slice().reverse();
-      state.color = { type: "div", thr: t, cols, of: v => cols[Math.min(7, d3.bisect(t, v))] , dom: [-m, m] };
+    if (meta.scale === "divergente") {
+      const m = Math.max(Math.abs(ext[0]), Math.abs(ext[1])) || 1;
+      const cols = rampColors("divergente", 7);          // índice 3 = crema (cero)
+      const t = [-m * .5, -m * .2, -m * .05, m * .05, m * .2, m * .5];
+      state.color = { type: "div", cols, dom: [-m, m], of: v => cols[d3.bisect(t, v)] };
     } else {
-      const q = d3.scaleQuantile().domain(vals).range(d3.range(7));
-      const scheme = d3.schemeYlGnBu[7];
-      const breaks = q.quantiles();
-      state.color = { type: "seq", breaks, cols: scheme, of: v => scheme[q(v)], dom: ext };
+      const cols = rampColors(meta.family || "calido", NBINS);
+      const q = d3.scaleQuantile().domain(vals).range(d3.range(NBINS));
+      state.color = { type: "seq", cols, dom: ext,
+                      edges: [ext[0], ...q.quantiles(), ext[1]], of: v => cols[q(v)] };
     }
     buildLegend(meta);
   }
 
   function buildLegend(meta) {
     const c = state.color;
-    document.getElementById("legendTitle").textContent = `${meta.name} (${meta.unit})`;
+    const suf = (meta.unit && meta.unit.indexOf("%") >= 0) ? "%" : "";
     const bins = d3.select("#legendBins").html("");
     c.cols.forEach(col => bins.append("span").style("background", col));
-    const ticks = c.type === "div"
-      ? [c.dom[0], 0, c.dom[1]]
-      : [c.dom[0], c.breaks[2], c.breaks[5], c.dom[1]];
-    d3.select("#legendTicks").html("").selectAll("span").data(ticks).join("span")
-      .text(d => fmt(d, meta.unit));
+    // marcas de valor SOBRE la barra, alineadas a cada borde de bin
+    const ticks = c.type === "div" ? [c.dom[0], 0, c.dom[1]] : c.edges;
+    const td = d3.select("#legendTicks").html("");
+    const n = ticks.length;
+    ticks.forEach((d, i) => {
+      const sp = td.append("span").text(fmtTick(d, suf))
+        .style("left", (n === 1 ? 50 : (i / (n - 1)) * 100) + "%");
+      if (i === 0) sp.style("transform", "translateX(0)");
+      else if (i === n - 1) sp.style("transform", "translateX(-100%)");
+    });
   }
 
   // ---------- Render ----------

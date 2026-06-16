@@ -58,7 +58,7 @@
 
         const w = 300, h = 90, pad = 6;
         const sp = sparkPath(s, w, h, pad);
-        const col = good ? "#1c7a4b" : "#C00000";
+        const col = good ? "#0D7E72" : "#C00000";   // verde teal de marca / rojo populi
         const svg = card.append("svg").attr("viewBox", `0 0 ${w} ${h}`).attr("preserveAspectRatio", "none");
         const gid = "g_" + t.id.replace(/[^a-z0-9]/gi, "");
         svg.append("defs").append("linearGradient").attr("id", gid).attr("x1", 0).attr("y1", 0).attr("x2", 0).attr("y2", 1)

@@ -159,13 +159,24 @@ svg#map{width:100%;height:100%;display:block;background:linear-gradient(#f3f6fa,
 .country:hover{stroke:#222;stroke-width:1.1px}
 .sphere{fill:#dfe7ee}
 
-/* Leyenda */
-.legend{position:absolute;left:18px;bottom:16px;background:rgba(255,255,255,.95);
-  border:1px solid var(--border);border-radius:9px;padding:10px 12px;box-shadow:var(--shadow);max-width:300px}
-.legend .lt{font-size:11px;color:var(--navy-soft);margin-bottom:6px}
-.legend .bins{display:flex;height:12px;border-radius:3px;overflow:hidden}
-.legend .bins span{flex:1}
-.legend .ticks{display:flex;justify-content:space-between;font-size:10px;color:var(--navy-soft);margin-top:3px;font-variant-numeric:tabular-nums}
+/* Leyenda del mapa (estilo OWID): barra alargada al pie · marcas ARRIBA · "Sin dato" con trama a la izquierda */
+#legend{position:absolute;left:18px;right:18px;bottom:14px;display:flex;align-items:flex-end;gap:18px;
+  background:rgba(250,248,243,.93);border:1px solid var(--border);border-radius:8px;
+  padding:8px 16px 9px;box-shadow:var(--shadow)}
+#legend .leg-nodata{display:flex;flex-direction:column;align-items:center;gap:5px;flex:0 0 auto}
+#legend .leg-cap{font-size:10px;color:var(--navy-soft);white-space:nowrap}
+#legend .leg-nd-sw{width:36px;height:14px;border:1px solid var(--border);border-radius:2px;
+  background:repeating-linear-gradient(45deg,#fff 0 3px,#cbc5b9 3px 5px)}
+#legend .leg-scale{flex:1 1 auto;min-width:0}
+#legend .leg-ticks{position:relative;height:14px;margin-bottom:4px;font-size:10px;
+  color:var(--navy-soft);font-variant-numeric:tabular-nums}
+#legend .leg-ticks span{position:absolute;bottom:0;transform:translateX(-50%);white-space:nowrap}
+#legend .leg-bar{display:flex;height:14px;border-radius:2px;overflow:hidden}
+#legend .leg-bar span{flex:1}
+/* Fuentes bajo el mapa */
+.map-sources{font-size:12px;color:var(--navy-soft);line-height:1.55;margin:16px 2px 0}
+.map-sources a{color:var(--populi);font-weight:600;text-decoration:none}
+.map-sources a:hover{text-decoration:underline}
 
 /* ===== SCATTER ===== */
 .scatter-wrap{border:1px solid var(--border);border-radius:16px;background:#fff;box-shadow:var(--shadow);padding:18px 20px}
@@ -177,7 +188,8 @@ svg#map{width:100%;height:100%;display:block;background:linear-gradient(#f3f6fa,
 .logtog{font-size:11px;font-weight:500;text-transform:none;letter-spacing:0;color:var(--navy-soft);display:flex;gap:5px;align-items:center}
 .scatter-stage{position:relative;margin-top:14px}
 svg#scSvg{width:100%;height:60vh;min-height:440px;display:block}
-.scatter-stage .legend.reg{position:absolute;right:8px;top:8px;left:auto;bottom:auto;display:flex;flex-direction:column;gap:3px}
+.scatter-stage .legend.reg{position:absolute;right:8px;top:8px;left:auto;bottom:auto;display:flex;flex-direction:column;gap:3px;
+  background:rgba(255,255,255,.95);border:1px solid var(--border);border-radius:9px;padding:8px 10px;box-shadow:var(--shadow)}
 .legend.reg .ri{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--navy);cursor:pointer}
 .legend.reg .ri .sw{width:11px;height:11px;border-radius:50%}
 .legend.reg .ri.off{opacity:.32}
@@ -201,7 +213,7 @@ svg#scSvg{width:100%;height:60vh;min-height:440px;display:block}
 .trend-card .tval{display:flex;align-items:baseline;gap:8px;margin-bottom:6px}
 .trend-card .tnow{font-family:var(--serif);font-size:26px;font-weight:800;color:var(--navy)}
 .trend-card .tdelta{font-size:12px;font-weight:700;padding:2px 8px;border-radius:999px}
-.tdelta.good{background:rgba(34,139,87,.12);color:#1c7a4b}
+.tdelta.good{background:rgba(13,126,114,.12);color:#0D7E72}
 .tdelta.bad{background:rgba(192,0,0,.1);color:var(--populi-light)}
 .trend-card svg{width:100%;height:90px;display:block}
 .trend-note{font-size:12.5px;color:var(--navy-soft);margin-top:20px;text-align:center}
@@ -246,12 +258,44 @@ svg#scSvg{width:100%;height:60vh;min-height:440px;display:block}
 }
 @media (max-width:780px){
   .nav-links{display:none}
+  .nav-ext{display:none}                 /* va en el menú desplegable: descongestiona la barra */
   .brand-sub{font-size:12.5px}
   .menu-btn{display:block}
   .navbar.open .nav-mobile{display:flex}
+  .section{padding:48px 18px}
+  /* explorador de mapas */
   .explorer{grid-template-columns:1fr;height:auto}
   .sidebar{max-height:300px;border-right:none;border-bottom:1px solid var(--border)}
-  .mapwrap{height:62vh}
-  svg#scSvg{height:64vh}
+  .mapwrap{height:70vh}                                 /* más espacio para el mapa */
+  .titlebar{padding:12px 14px 4px}
+  .controls{flex-wrap:wrap;gap:10px;padding:8px 14px}   /* año+slider+play+toggle sin desbordar */
+  /* leyenda del mapa: misma franja, pero más compacta (números y barra) y más abajo,
+     para que las marcas no se solapen ni se vea estrecho */
+  #legend{left:10px;right:10px;bottom:6px;padding:6px 10px 7px;gap:9px}
+  #legend .leg-ticks{height:12px;margin-bottom:3px;font-size:8px}
+  #legend .leg-bar{height:11px}
+  #legend .leg-cap{font-size:8.5px}
+  #legend .leg-nd-sw{width:26px;height:11px}
+  /* correlaciones: selects a ancho completo; leyenda de regiones DEBAJO del gráfico */
+  .scatter-wrap{padding:14px}
+  .scatter-controls{gap:14px}
+  .scatter-controls label{width:100%}
+  .scatter-controls select{min-width:0;width:100%}
+  svg#scSvg{height:56vh;min-height:360px}
+  .scatter-stage .legend.reg{position:static;right:auto;top:auto;
+    flex-direction:row;flex-wrap:wrap;gap:6px 14px;margin-top:12px}
+  .scatter-hint{margin-left:0}
+  /* tendencias */
+  .factquote{padding:16px 18px}
+  .factquote p{font-size:18px}
   .foot-inner{grid-template-columns:1fr}
+}
+@media (max-width:430px){
+  .brand-sub{display:none}               /* en teléfonos chicos basta el logo + menú */
+  .hero-inner.centered{padding:54px 18px 80px}
+  .trend-grid{grid-template-columns:1fr}
+  .controls .yr,.scatter-time .yr{font-size:24px;min-width:60px}
+  #legend{gap:7px;padding:5px 9px 6px}
+  #legend .leg-ticks{font-size:7.5px}
+  #legend .leg-cap{font-size:8px}
 }
