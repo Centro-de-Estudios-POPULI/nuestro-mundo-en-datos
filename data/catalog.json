@@ -71,7 +71,7 @@
   },
   {
    "name": "Productividad · Penn World Table",
-   "count": 5
+   "count": 4
   }
  ],
  "indicators": [
@@ -3564,23 +3564,6 @@
    "scale": "secuencial",
    "direction": "neutro",
    "family": "azul"
-  },
-  {
-   "id": "PWT.GDPWK",
-   "name": "PIB por trabajador (productividad laboral)",
-   "unit": "US$ internacionales de 2021",
-   "category": "Productividad · Penn World Table",
-   "type": "rel",
-   "coverage_pct": 83.4,
-   "latest_year_median": 2023,
-   "latest_year_max": 2023,
-   "wb_name": "PIB por trabajador (productividad laboral)",
-   "def": "PIB real por persona ocupada: una medida de productividad laboral.",
-   "org": "Groningen Growth and Development Centre, Universidad de Groningen",
-   "source": "Penn World Table 11.0 (Feenstra, Inklaar y Timmer)",
-   "scale": "secuencial",
-   "direction": "mejor",
-   "family": "verde"
   },
   {
    "id": "PWT.HC",

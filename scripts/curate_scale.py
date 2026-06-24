@@ -68,7 +68,7 @@ MEJOR = {
     "SE.PRE.ENRR", "SE.PRM.CMPT.ZS", "SE.XPD.TOTL.GD.ZS",
     # ingreso / productividad / capital humano
     "NY.GDP.PCAP.CD", "NY.GDP.PCAP.PP.CD", "NY.GDP.PCAP.KD", "NY.GNP.PCAP.CD",
-    "NY.GNP.PCAP.PP.CD", "HD.HCI.OVRL", "MPD.GDPPC", "PWT.GDPWK",
+    "NY.GNP.PCAP.PP.CD", "HD.HCI.OVRL", "MPD.GDPPC",
     "PWT.HC", "PWT.CTFP", "SI.DST.FRST.10",
     # energía / acceso
     "EG.ELC.ACCS.ZS", "EG.CFT.ACCS.ZS", "EG.FEC.RNEW.ZS", "EG.ELC.RNEW.ZS",

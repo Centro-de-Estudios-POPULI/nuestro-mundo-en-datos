@@ -63,18 +63,15 @@ def main():
     ensure()
     df = pd.read_excel(XLSX, sheet_name="Data")
     # variables derivadas
-    df["gdppc"] = df["rgdpo"] / df["pop"]            # PIB pc PPA (millones/millones = US$ pc)
-    df["gdpwk"] = df["rgdpo"] / df["emp"]            # PIB por trabajador
     df["labsh_pct"] = df["labsh"] * 100
     metas = []
 
-    # NOTA: el PIB per cápita de PWT (rgdpo/pop) se retiró deliberadamente. Es una serie
-    # DERIVADA (PWT no trae columna per cápita) y, medida como PIB real lado-producción,
-    # produce artefactos en petro-economías (p. ej. Emiratos en 1980 > hoy). El PIB per
-    # cápita histórico lo cubre la serie NATIVA del Maddison Project (MPD.GDPPC).
+    # NOTA: se retiraron deliberadamente el PIB per cápita (rgdpo/pop) y el PIB por
+    # trabajador (rgdpo/emp) de PWT. Ambos eran series DERIVADAS por nosotros (PWT no las
+    # trae) y, medidas como PIB real lado-producción, generan artefactos en petro-economías
+    # (p. ej. Emiratos en 1980 >> hoy). El PIB per cápita histórico lo cubre la serie NATIVA
+    # del Maddison Project (MPD.GDPPC). Se conservan solo variables nativas de PWT.
     defs = [
-        ("PWT.GDPWK", "PIB por trabajador (productividad laboral)", "US$ internacionales de 2021", "gdpwk", 0, True,
-         "PIB real por persona ocupada: una medida de productividad laboral."),
         ("PWT.HC", "Índice de capital humano", "índice", "hc", 3, False,
          "Índice de capital humano por persona, basado en años de escolaridad (Barro-Lee) y los retornos a la educación (ecuación de Mincer)."),
         ("PWT.AVH", "Horas trabajadas al año por ocupado", "horas/año", "avh", 0, True,
