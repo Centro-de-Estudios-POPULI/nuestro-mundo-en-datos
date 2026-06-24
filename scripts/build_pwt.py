@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
-Penn World Table 10.01 -> JSON compactos + catálogo.
+Penn World Table 11.0 -> JSON compactos + catálogo.
 PIB per cápita PPA, productividad laboral, capital humano, horas trabajadas, PTF.
 Fuente: Feenstra, Inklaar y Timmer (2015), GGDC, Universidad de Groningen (CC BY 4.0).
+Versión 11.0 (oct-2025): 185 países, 1950-2023, dólares internacionales de 2021.
 """
 import pandas as pd, json, os, statistics, urllib.request
 
@@ -10,10 +11,10 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.normpath(os.path.join(HERE, "..", "data"))
 OUT = os.path.join(DATA, "indicators")
 SRCDIR = os.path.join(DATA, "sources")
-XLSX = os.path.join(SRCDIR, "pwt1001.xlsx")
-URL = "https://dataverse.nl/api/access/datafile/354095"
+XLSX = os.path.join(SRCDIR, "pwt1100.xlsx")
+URL = "https://dataverse.nl/api/access/datafile/554105"
 ORG = "Groningen Growth and Development Centre, Universidad de Groningen"
-SOURCE = "Penn World Table 10.01 (Feenstra, Inklaar y Timmer)"
+SOURCE = "Penn World Table 11.0 (Feenstra, Inklaar y Timmer)"
 CATEGORY = "Productividad · Penn World Table"
 regions = set(json.load(open(os.path.join(DATA, "regions.json"), encoding="utf-8")))
 
@@ -68,9 +69,9 @@ def main():
     metas = []
 
     defs = [
-        ("PWT.GDPPC", "PIB per cápita (PPA, PWT)", "US$ internacionales de 2017", "gdppc", 0, True,
+        ("PWT.GDPPC", "PIB per cápita (PPA, PWT)", "US$ internacionales de 2021", "gdppc", 0, True,
          "PIB real per cápita (lado de la producción, PPA encadenadas) de la Penn World Table; comparable entre países y en el tiempo."),
-        ("PWT.GDPWK", "PIB por trabajador (productividad laboral)", "US$ internacionales de 2017", "gdpwk", 0, True,
+        ("PWT.GDPWK", "PIB por trabajador (productividad laboral)", "US$ internacionales de 2021", "gdpwk", 0, True,
          "PIB real por persona ocupada: una medida de productividad laboral."),
         ("PWT.HC", "Índice de capital humano", "índice", "hc", 3, False,
          "Índice de capital humano por persona, basado en años de escolaridad (Barro-Lee) y los retornos a la educación (ecuación de Mincer)."),
