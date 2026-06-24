@@ -68,9 +68,11 @@ def main():
     df["labsh_pct"] = df["labsh"] * 100
     metas = []
 
+    # NOTA: el PIB per cápita de PWT (rgdpo/pop) se retiró deliberadamente. Es una serie
+    # DERIVADA (PWT no trae columna per cápita) y, medida como PIB real lado-producción,
+    # produce artefactos en petro-economías (p. ej. Emiratos en 1980 > hoy). El PIB per
+    # cápita histórico lo cubre la serie NATIVA del Maddison Project (MPD.GDPPC).
     defs = [
-        ("PWT.GDPPC", "PIB per cápita (PPA, PWT)", "US$ internacionales de 2021", "gdppc", 0, True,
-         "PIB real per cápita (lado de la producción, PPA encadenadas) de la Penn World Table; comparable entre países y en el tiempo."),
         ("PWT.GDPWK", "PIB por trabajador (productividad laboral)", "US$ internacionales de 2021", "gdpwk", 0, True,
          "PIB real por persona ocupada: una medida de productividad laboral."),
         ("PWT.HC", "Índice de capital humano", "índice", "hc", 3, False,

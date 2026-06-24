@@ -33,7 +33,7 @@
   }
 
   const state = {
-    catalog: null, crosswalk: null, countries: null, sphere: null,
+    catalog: null, crosswalk: null, countries: null, sphere: null, drawn: null,
     nameById: {}, ind: null, data: null, year: null, latest: false, playing: null, color: null
   };
 
@@ -65,6 +65,9 @@
       f.iso3 = iso;
       f.nameEs = (iso && regions[iso] && regions[iso].name) || (f.properties && f.properties.name);
     });
+    // conjunto de países que el mapa REALMENTE dibuja (tienen polígono): la escala
+    // de color se calcula solo con ellos, para que leyenda y mapa sean consistentes.
+    state.drawn = new Set(state.countries.map(f => f.iso3).filter(Boolean));
     sizeMap();
     drawBase();
     buildSidebar();
@@ -195,27 +198,40 @@
   // scale "divergente" -> anclada en 0 (slate-crema-rojo); si no, secuencial por
   // cuantiles con la familia de marca del indicador (verde/calido/azul) según valencia.
   function buildColor(raw, meta) {
-    // SOLO países reales: excluir los agregados del Banco Mundial (Mundo, regiones y
-    // grupos de ingreso: WLD, HIC, EUU, OED…). No se dibujan en el mapa, pero
-    // contaminaban la escala/leyenda (p. ej. población mundial = 8,1 mil M).
+    // SOLO países que el mapa REALMENTE dibuja: se excluyen (a) los agregados del
+    // Banco Mundial (WLD/HIC/regiones), y (b) los micro-estados sin polígono en el
+    // topojson 110m (Bermudas, Macao, Singapur, Caimán…), que tenían dato pero nunca
+    // se ven y antes torcían el extremo de la escala/leyenda.
     const reg = state.regions || {};
+    const drawn = state.drawn;
     const vals = [];
     for (const k in raw.data) {
       if (!(k in reg)) continue;
+      if (drawn && !drawn.has(k)) continue;
       for (const v of raw.data[k]) if (v != null) vals.push(v);
     }
     vals.sort(d3.ascending);
     const ext = [vals[0], vals[vals.length - 1]];
     if (meta.scale === "divergente") {
-      const m = Math.max(Math.abs(ext[0]), Math.abs(ext[1])) || 1;
+      // recorte robusto a [p1, p99]: un valor extremo no debe inflar la rampa.
+      const p1 = d3.quantileSorted(vals, 0.01), p99 = d3.quantileSorted(vals, 0.99);
+      const m = Math.max(Math.abs(p1), Math.abs(p99)) || 1;
       const cols = rampColors("divergente", 7);          // índice 3 = crema (cero)
       const t = [-m * .5, -m * .2, -m * .05, m * .05, m * .2, m * .5];
-      state.color = { type: "div", cols, dom: [-m, m], of: v => cols[d3.bisect(t, v)] };
+      state.color = { type: "div", cols, dom: [-m, m],
+                      capLo: ext[0] < -m, capHi: ext[1] > m,
+                      of: v => cols[d3.bisect(t, v < -m ? -m : v > m ? m : v)] };
     } else {
+      // recorte del extremo alto al percentil 99: evita que outliers históricos
+      // (p. ej. petro-economías en 1980) aplasten el color del mundo actual.
+      const lo = ext[0];
+      const p99 = d3.quantileSorted(vals, 0.99);
+      const cap = (p99 != null && p99 > lo) ? p99 : ext[1];
+      const clamp = v => v > cap ? cap : v;
       const cols = rampColors(meta.family || "calido", NBINS);
-      const q = d3.scaleQuantile().domain(vals).range(d3.range(NBINS));
-      state.color = { type: "seq", cols, dom: ext,
-                      edges: [ext[0], ...q.quantiles(), ext[1]], of: v => cols[q(v)] };
+      const q = d3.scaleQuantile().domain(vals.map(clamp)).range(d3.range(NBINS));
+      state.color = { type: "seq", cols, dom: [lo, cap], capHi: ext[1] > cap,
+                      edges: [lo, ...q.quantiles(), cap], of: v => cols[q(clamp(v))] };
     }
     buildLegend(meta);
   }
@@ -230,7 +246,11 @@
     const td = d3.select("#legendTicks").html("");
     const n = ticks.length;
     ticks.forEach((d, i) => {
-      const sp = td.append("span").text(fmtTick(d, suf))
+      // si el extremo está recortado al percentil, anteponer ≥ / ≤ (honestidad)
+      let label = fmtTick(d, suf);
+      if (i === n - 1 && c.capHi) label = "≥ " + label;
+      else if (i === 0 && c.capLo) label = "≤ " + label;
+      const sp = td.append("span").text(label)
         .style("left", (n === 1 ? 50 : (i / (n - 1)) * 100) + "%");
       if (i === 0) sp.style("transform", "translateX(0)");
       else if (i === n - 1) sp.style("transform", "translateX(-100%)");

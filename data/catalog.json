@@ -66,12 +66,12 @@
    "count": 6
   },
   {
-   "name": "Productividad · Penn World Table",
-   "count": 6
-  },
-  {
    "name": "Largo plazo · Maddison Project",
    "count": 2
+  },
+  {
+   "name": "Productividad · Penn World Table",
+   "count": 5
   }
  ],
  "indicators": [
@@ -3532,21 +3532,38 @@
    "family": "azul"
   },
   {
-   "id": "PWT.GDPPC",
-   "name": "PIB per cápita (PPA, PWT)",
-   "unit": "US$ internacionales de 2021",
-   "category": "Productividad · Penn World Table",
+   "id": "MPD.GDPPC",
+   "name": "PIB per cápita (histórico)",
+   "unit": "US$ internacionales de 2011",
+   "category": "Largo plazo · Maddison Project",
    "type": "rel",
-   "coverage_pct": 83.9,
-   "latest_year_median": 2023,
-   "latest_year_max": 2023,
-   "wb_name": "PIB per cápita (PPA, PWT)",
-   "def": "PIB real per cápita (lado de la producción, PPA encadenadas) de la Penn World Table; comparable entre países y en el tiempo.",
+   "coverage_pct": 76.0,
+   "latest_year_median": 2022,
+   "latest_year_max": 2022,
+   "wb_name": "PIB per cápita (histórico)",
+   "def": "PIB per cápita real en dólares internacionales de 2011, empalmado por el Maddison Project para permitir comparaciones de niveles de ingreso en el muy largo plazo (desde 1820, y antes para algunos países).",
    "org": "Groningen Growth and Development Centre, Universidad de Groningen",
-   "source": "Penn World Table 11.0 (Feenstra, Inklaar y Timmer)",
+   "source": "Maddison Project Database 2023 (Bolt y van Zanden)",
    "scale": "secuencial",
    "direction": "mejor",
    "family": "verde"
+  },
+  {
+   "id": "MPD.POP",
+   "name": "Población (histórica)",
+   "unit": "personas",
+   "category": "Largo plazo · Maddison Project",
+   "type": "abs",
+   "coverage_pct": 76.0,
+   "latest_year_median": 2022,
+   "latest_year_max": 2022,
+   "wb_name": "Población (histórica)",
+   "def": "Población total con cobertura histórica de largo plazo estimada por el Maddison Project.",
+   "org": "Groningen Growth and Development Centre, Universidad de Groningen",
+   "source": "Maddison Project Database 2023 (Bolt y van Zanden)",
+   "scale": "secuencial",
+   "direction": "neutro",
+   "family": "azul"
   },
   {
    "id": "PWT.GDPWK",
@@ -3629,40 +3646,6 @@
    "def": "Porción del ingreso nacional que remunera al trabajo (salarios y autoempleo), frente al capital.",
    "org": "Groningen Growth and Development Centre, Universidad de Groningen",
    "source": "Penn World Table 11.0 (Feenstra, Inklaar y Timmer)",
-   "scale": "secuencial",
-   "direction": "neutro",
-   "family": "azul"
-  },
-  {
-   "id": "MPD.GDPPC",
-   "name": "PIB per cápita (histórico)",
-   "unit": "US$ internacionales de 2011",
-   "category": "Largo plazo · Maddison Project",
-   "type": "rel",
-   "coverage_pct": 76.0,
-   "latest_year_median": 2022,
-   "latest_year_max": 2022,
-   "wb_name": "PIB per cápita (histórico)",
-   "def": "PIB per cápita real en dólares internacionales de 2011, empalmado por el Maddison Project para permitir comparaciones de niveles de ingreso en el muy largo plazo (desde 1820, y antes para algunos países).",
-   "org": "Groningen Growth and Development Centre, Universidad de Groningen",
-   "source": "Maddison Project Database 2023 (Bolt y van Zanden)",
-   "scale": "secuencial",
-   "direction": "mejor",
-   "family": "verde"
-  },
-  {
-   "id": "MPD.POP",
-   "name": "Población (histórica)",
-   "unit": "personas",
-   "category": "Largo plazo · Maddison Project",
-   "type": "abs",
-   "coverage_pct": 76.0,
-   "latest_year_median": 2022,
-   "latest_year_max": 2022,
-   "wb_name": "Población (histórica)",
-   "def": "Población total con cobertura histórica de largo plazo estimada por el Maddison Project.",
-   "org": "Groningen Growth and Development Centre, Universidad de Groningen",
-   "source": "Maddison Project Database 2023 (Bolt y van Zanden)",
    "scale": "secuencial",
    "direction": "neutro",
    "family": "azul"
