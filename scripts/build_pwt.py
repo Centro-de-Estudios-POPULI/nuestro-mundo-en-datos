@@ -20,12 +20,13 @@ regions = set(json.load(open(os.path.join(DATA, "regions.json"), encoding="utf-8
 
 import sys; sys.path.insert(0, HERE)
 from catalog_merge import merge
+from descarga import descargar
 
 def ensure():
     os.makedirs(SRCDIR, exist_ok=True)
     if not os.path.exists(XLSX):
         print("Descargando PWT…")
-        urllib.request.urlretrieve(URL, XLSX)
+        descargar(URL, XLSX)
 
 def series(df, col, rnd=2, as_int=False):
     piv = df.pivot_table(index="countrycode", columns="year", values=col, aggfunc="first")
