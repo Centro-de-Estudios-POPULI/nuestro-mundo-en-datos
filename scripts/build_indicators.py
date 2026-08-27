@@ -59,6 +59,27 @@ def build_one(ind_id):
     }
     os.makedirs(OUT, exist_ok=True)
     path = os.path.join(OUT, f"{ind_id}.json")
+
+    # GUARDA CONTRA LA FUENTE MUTILADA. El 2026-08-27 la API del Banco Mundial
+    # devolvió SP.POP.TOTL con 200, bien formado y con los 265 países… pero un
+    # solo año (2025) en vez de 1960-2025. Nada en el pipeline lo notaba: parsea,
+    # trae filas y los valores son sanos. Lo único que delata el fallo es que la
+    # serie ENCOGIÓ respecto de lo que ya teníamos.
+    # Ante una serie mucho más corta se conserva la de disco y se avisa: vale más
+    # el dato de ayer que un indicador mutilado publicado en silencio.
+    if os.path.exists(path):
+        try:
+            with open(path, encoding="utf-8") as fh:
+                previo = json.load(fh)
+            n_previo = len(previo.get("years") or [])
+            if n_previo and len(years) < n_previo * 0.8:
+                print(f"  ! {ind_id}: la fuente devolvió {len(years)} años y en disco "
+                      f"hay {n_previo} ({previo['years'][0]}-{previo['years'][-1]}). "
+                      f"NO se pisa; revisar la fuente.")
+                return None
+        except (OSError, ValueError, KeyError, IndexError):
+            pass  # si el archivo previo no se puede leer, se escribe el nuevo
+
     with open(path, "w", encoding="utf-8") as fh:
         json.dump(compact, fh, ensure_ascii=False, separators=(",", ":"))
     kb = os.path.getsize(path) / 1024

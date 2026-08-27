@@ -41,6 +41,40 @@ jobs:
           python scripts/build_maddison.py
           python scripts/build_pwt.py
 
+      # curate_catalog.py reconstruye catalog.json desde el barrido del Banco
+      # Mundial, así que TODA fuente que no corra después queda fuera del
+      # catálogo aunque su .json siga en data/indicators. Hasta el 2026-08-27
+      # estos dos pasos faltaban y el refresco borraba 17 indicadores y 3
+      # categorías (EFW + OWID); no se notó porque el workflow venía fallando
+      # antes de llegar al commit.
+      - name: Panel EFW del repo hermano
+        uses: actions/checkout@v4
+        with:
+          repository: Centro-de-Estudios-POPULI/populi-libertad-economica
+          path: _efw
+
+      - name: Fuentes que se fusionan al catálogo (EFW + OWID)
+        env:
+          EFW_PANEL: _efw/data/efw_panel_map.json
+        run: |
+          python scripts/build_efw.py
+          python scripts/build_owid.py
+
+      - name: Verificar que el catálogo no encogió
+        run: |
+          python - <<'EOF'
+          import json, subprocess, sys
+          nuevo = json.load(open("data/catalog.json", encoding="utf-8"))
+          viejo = json.loads(subprocess.run(
+              ["git", "show", "HEAD:data/catalog.json"],
+              capture_output=True, check=True).stdout.decode("utf-8"))
+          na, nb = len(viejo["indicators"]), len(nuevo["indicators"])
+          ca, cb = len(viejo["categories"]), len(nuevo["categories"])
+          print(f"catálogo: {na} -> {nb} indicadores, {ca} -> {cb} categorías")
+          if nb < na or cb < ca:
+              sys.exit(f"ERROR: el catálogo ENCOGIÓ. No se publica.")
+          EOF
+
       - name: Commit si hay cambios
         run: |
           git config user.name "github-actions"

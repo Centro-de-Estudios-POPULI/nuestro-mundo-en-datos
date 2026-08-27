@@ -10,6 +10,7 @@ escribe data/indicators/EFW.*.json y actualiza catalog.json (categoría 'Liberta
 Curaduría: más alto = más libre = mejor -> verde. Idempotente, con backup .efwbak.
 """
 import json
+import os
 from collections import Counter
 from pathlib import Path
 
@@ -17,7 +18,11 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 IND = DATA / "indicators"
 CAT = DATA / "catalog.json"
-EFW_SRC = ROOT.parent / "populi-libertad-economica" / "data" / "efw_panel_map.json"
+# El panel vive en el repo hermano populi-libertad-economica, que existe en la
+# máquina de trabajo pero NO en el runner de GitHub. EFW_PANEL permite apuntarlo
+# a un checkout dentro del workspace desde el workflow.
+EFW_SRC = (Path(os.environ["EFW_PANEL"]) if os.environ.get("EFW_PANEL")
+           else ROOT.parent / "populi-libertad-economica" / "data" / "efw_panel_map.json")
 
 ORG = "Fraser Institute — Economic Freedom of the World (informe anual 2025)"
 CATEGORY = "Libertad económica"
