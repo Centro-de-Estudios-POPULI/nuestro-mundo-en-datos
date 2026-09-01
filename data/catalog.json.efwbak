@@ -15,7 +15,7 @@
   },
   {
    "name": "Educación",
-   "count": 11
+   "count": 10
   },
   {
    "name": "Empleo y protección social",
@@ -31,7 +31,7 @@
   },
   {
    "name": "Energía",
-   "count": 11
+   "count": 10
   },
   {
    "name": "Comercio y sector externo",
@@ -43,11 +43,11 @@
   },
   {
    "name": "Gobernanza y sociedad",
-   "count": 12
+   "count": 11
   },
   {
    "name": "Desarrollo humano y bienestar",
-   "count": 13
+   "count": 10
   },
   {
    "name": "Estructura por edad (pirámide)",
@@ -60,18 +60,6 @@
   {
    "name": "Productividad · Penn World Table",
    "count": 4
-  },
-  {
-   "name": "Libertad económica",
-   "count": 6
-  },
-  {
-   "name": "Democracia y derechos",
-   "count": 4
-  },
-  {
-   "name": "Paz y conflicto",
-   "count": 1
   }
  ],
  "indicators": [
@@ -2745,278 +2733,6 @@
    "def": "Porción del ingreso nacional que remunera al trabajo (salarios y autoempleo), frente al capital.",
    "org": "Groningen Growth and Development Centre, Universidad de Groningen",
    "source": "Penn World Table 11.0 (Feenstra, Inklaar y Timmer)"
-  },
-  {
-   "id": "EFW.SUMMARY",
-   "name": "Índice de Libertad Económica",
-   "unit": "índice 0–10",
-   "category": "Libertad económica",
-   "type": "rel",
-   "coverage_pct": 75.6,
-   "latest_year_median": 2023,
-   "latest_year_max": 2023,
-   "wb_name": "EFW.SUMMARY",
-   "def": "Índice de Libertad Económica del Mundo (Fraser Institute): mide cuánto las políticas e instituciones de un país favorecen la libertad de elección, el intercambio voluntario y los mercados, de 0 a 10 (más libre).",
-   "org": "Fraser Institute — Economic Freedom of the World (informe anual 2025)",
-   "scale": "secuencial",
-   "direction": "mejor",
-   "family": "verde"
-  },
-  {
-   "id": "EFW.A1",
-   "name": "Libertad económica: Tamaño del Gobierno",
-   "unit": "índice 0–10",
-   "category": "Libertad económica",
-   "type": "rel",
-   "coverage_pct": 75.6,
-   "latest_year_median": 2023,
-   "latest_year_max": 2023,
-   "wb_name": "EFW.A1",
-   "def": "Área 1 del EFW: peso del gasto público, los impuestos y las empresas estatales. Un valor alto indica menor intervención del Estado (más libertad).",
-   "org": "Fraser Institute — Economic Freedom of the World (informe anual 2025)",
-   "scale": "secuencial",
-   "direction": "mejor",
-   "family": "verde"
-  },
-  {
-   "id": "EFW.A2",
-   "name": "Libertad económica: Sistema Legal y Derechos de Propiedad",
-   "unit": "índice 0–10",
-   "category": "Libertad económica",
-   "type": "rel",
-   "coverage_pct": 75.6,
-   "latest_year_median": 2023,
-   "latest_year_max": 2023,
-   "wb_name": "EFW.A2",
-   "def": "Área 2 del EFW: calidad del sistema legal y protección de los derechos de propiedad. Un valor alto indica instituciones más sólidas.",
-   "org": "Fraser Institute — Economic Freedom of the World (informe anual 2025)",
-   "scale": "secuencial",
-   "direction": "mejor",
-   "family": "verde"
-  },
-  {
-   "id": "EFW.A3",
-   "name": "Libertad económica: Solidez del Dinero",
-   "unit": "índice 0–10",
-   "category": "Libertad económica",
-   "type": "rel",
-   "coverage_pct": 75.6,
-   "latest_year_median": 2023,
-   "latest_year_max": 2023,
-   "wb_name": "EFW.A3",
-   "def": "Área 3 del EFW: estabilidad monetaria y libertad para usar monedas. Un valor alto indica menor inflación y mayor libertad monetaria.",
-   "org": "Fraser Institute — Economic Freedom of the World (informe anual 2025)",
-   "scale": "secuencial",
-   "direction": "mejor",
-   "family": "verde"
-  },
-  {
-   "id": "EFW.A4",
-   "name": "Libertad económica: Libertad de Comercio Internacional",
-   "unit": "índice 0–10",
-   "category": "Libertad económica",
-   "type": "rel",
-   "coverage_pct": 75.6,
-   "latest_year_median": 2023,
-   "latest_year_max": 2023,
-   "wb_name": "EFW.A4",
-   "def": "Área 4 del EFW: apertura al comercio exterior (aranceles, barreras y controles de capital). Un valor alto indica mayor libertad para comerciar.",
-   "org": "Fraser Institute — Economic Freedom of the World (informe anual 2025)",
-   "scale": "secuencial",
-   "direction": "mejor",
-   "family": "verde"
-  },
-  {
-   "id": "EFW.A5",
-   "name": "Libertad económica: Regulación",
-   "unit": "índice 0–10",
-   "category": "Libertad económica",
-   "type": "rel",
-   "coverage_pct": 75.6,
-   "latest_year_median": 2023,
-   "latest_year_max": 2023,
-   "wb_name": "EFW.A5",
-   "def": "Área 5 del EFW: regulación del crédito, el trabajo y los negocios. Un valor alto indica regulaciones menos restrictivas.",
-   "org": "Fraser Institute — Economic Freedom of the World (informe anual 2025)",
-   "scale": "secuencial",
-   "direction": "mejor",
-   "family": "verde"
-  },
-  {
-   "id": "OWID.electoral-democracy-index",
-   "name": "Índice de democracia electoral",
-   "unit": "índice 0–1",
-   "category": "Democracia y derechos",
-   "type": "rel",
-   "coverage_pct": 80.2,
-   "latest_year_median": 2025,
-   "latest_year_max": 2025,
-   "wb_name": "electoral-democracy-index",
-   "def": "Mide en qué grado los líderes políticos son electos mediante sufragio amplio en elecciones libres y justas, de 0 (menos democrático) a 1 (más democrático).",
-   "org": "V-Dem (Varieties of Democracy)",
-   "scale": "secuencial",
-   "direction": "mejor",
-   "family": "verde"
-  },
-  {
-   "id": "OWID.human-rights-index-vdem",
-   "name": "Índice de derechos humanos",
-   "unit": "índice 0–1",
-   "category": "Democracia y derechos",
-   "type": "rel",
-   "coverage_pct": 80.2,
-   "latest_year_median": 2025,
-   "latest_year_max": 2025,
-   "wb_name": "human-rights-index-vdem",
-   "def": "Grado en que las personas están libres de tortura, ejecuciones políticas y trabajo forzado, y gozan de derechos de propiedad y libertades, de 0 a 1 (más derechos).",
-   "org": "V-Dem (Varieties of Democracy)",
-   "scale": "secuencial",
-   "direction": "mejor",
-   "family": "verde"
-  },
-  {
-   "id": "OWID.press-freedom-rsf",
-   "name": "Libertad de prensa",
-   "unit": "índice 0–100",
-   "category": "Democracia y derechos",
-   "type": "rel",
-   "coverage_pct": 81.1,
-   "latest_year_median": 2021,
-   "latest_year_max": 2021,
-   "wb_name": "press-freedom-rsf",
-   "def": "Índice de RSF sobre el entorno para el periodismo. En esta convención un puntaje más bajo es mejor (Buena 0–15 … Muy grave 55–100).",
-   "org": "Reporteros Sin Fronteras (RSF)",
-   "scale": "secuencial",
-   "direction": "peor",
-   "family": "calido"
-  },
-  {
-   "id": "OWID.corruption-perception-index",
-   "name": "Índice de percepción de la corrupción",
-   "unit": "índice 0–100",
-   "category": "Democracia y derechos",
-   "type": "rel",
-   "coverage_pct": 82.9,
-   "latest_year_median": 2024,
-   "latest_year_max": 2024,
-   "wb_name": "corruption-perception-index",
-   "def": "Percepción del nivel de corrupción del sector público, de 0 (muy corrupto) a 100 (muy transparente). Más alto = mejor.",
-   "org": "Transparency International",
-   "scale": "secuencial",
-   "direction": "mejor",
-   "family": "verde"
-  },
-  {
-   "id": "OWID.human-development-index",
-   "name": "Índice de Desarrollo Humano (IDH)",
-   "unit": "índice 0–1",
-   "category": "Desarrollo humano y bienestar",
-   "type": "rel",
-   "coverage_pct": 88.9,
-   "latest_year_median": 2023,
-   "latest_year_max": 2023,
-   "wb_name": "human-development-index",
-   "def": "Medida resumen de tres dimensiones: vida larga y saludable, educación y nivel de vida digno, de 0 a 1 (mayor desarrollo).",
-   "org": "PNUD — Informe sobre Desarrollo Humano",
-   "scale": "secuencial",
-   "direction": "mejor",
-   "family": "verde"
-  },
-  {
-   "id": "OWID.gender-inequality-index-from-the-human-development-report",
-   "name": "Índice de Desigualdad de Género",
-   "unit": "índice 0–1",
-   "category": "Desarrollo humano y bienestar",
-   "type": "rel",
-   "coverage_pct": 79.3,
-   "latest_year_median": 2023,
-   "latest_year_max": 2023,
-   "wb_name": "gender-inequality-index-from-the-human-development-report",
-   "def": "Desigualdad entre mujeres y hombres en salud reproductiva, empoderamiento y mercado laboral, de 0 (igualdad) a 1 (máxima desigualdad). Más alto = peor.",
-   "org": "PNUD — Informe sobre Desarrollo Humano",
-   "scale": "secuencial",
-   "direction": "peor",
-   "family": "calido"
-  },
-  {
-   "id": "OWID.happiness-cantril-ladder",
-   "name": "Satisfacción con la vida",
-   "unit": "escala 0–10",
-   "category": "Desarrollo humano y bienestar",
-   "type": "rel",
-   "coverage_pct": 75.1,
-   "latest_year_median": 2025,
-   "latest_year_max": 2025,
-   "wb_name": "happiness-cantril-ladder",
-   "def": "Promedio de la 'escalera de Cantril': los encuestados ubican su vida actual de 0 (peor vida posible) a 10 (mejor posible).",
-   "org": "World Happiness Report (encuesta Gallup)",
-   "scale": "secuencial",
-   "direction": "mejor",
-   "family": "verde"
-  },
-  {
-   "id": "OWID.mean-years-of-schooling-long-run",
-   "name": "Años promedio de escolaridad",
-   "unit": "años",
-   "category": "Educación",
-   "type": "rel",
-   "coverage_pct": 66.4,
-   "latest_year_median": 2020,
-   "latest_year_max": 2020,
-   "wb_name": "mean-years-of-schooling-long-run",
-   "def": "Promedio de años de educación formal de la población de 15 a 64 años. Serie histórica larga (desde 1870), con más es mejor.",
-   "org": "Barro y Lee (2015); Lee y Lee (2016)",
-   "scale": "secuencial",
-   "direction": "mejor",
-   "family": "verde"
-  },
-  {
-   "id": "OWID.self-reported-trust-attitudes",
-   "name": "Confianza interpersonal",
-   "unit": "% de la población",
-   "category": "Gobernanza y sociedad",
-   "type": "rel",
-   "coverage_pct": 52.5,
-   "latest_year_median": 2022,
-   "latest_year_max": 2022,
-   "wb_name": "self-reported-trust-attitudes",
-   "def": "Porcentaje que está de acuerdo con que 'se puede confiar en la mayoría de las personas'. Indicador de capital social; dato de encuesta (cobertura irregular).",
-   "org": "Integrated Values Surveys (World Values Survey + European Values Study)",
-   "scale": "secuencial",
-   "direction": "mejor",
-   "family": "verde"
-  },
-  {
-   "id": "OWID.terrorism-deaths",
-   "name": "Muertes por terrorismo",
-   "unit": "personas",
-   "category": "Paz y conflicto",
-   "type": "abs",
-   "coverage_pct": 82.5,
-   "latest_year_median": 2021,
-   "latest_year_max": 2021,
-   "wb_name": "terrorism-deaths",
-   "def": "Muertes confirmadas por atentados terroristas (víctimas y atacantes). Total absoluto; más alto = peor.",
-   "org": "START — Global Terrorism Database",
-   "scale": "secuencial",
-   "direction": "peor",
-   "family": "calido"
-  },
-  {
-   "id": "OWID.share-electricity-low-carbon",
-   "name": "Electricidad de fuentes bajas en carbono",
-   "unit": "% de la generación",
-   "category": "Energía",
-   "type": "rel",
-   "coverage_pct": 93.1,
-   "latest_year_median": 2025,
-   "latest_year_max": 2025,
-   "wb_name": "share-electricity-low-carbon",
-   "def": "Proporción de la electricidad generada con fuentes renovables y nuclear, que emiten mucho menos gases de efecto invernadero que los fósiles.",
-   "org": "Ember; Energy Institute — Statistical Review of World Energy",
-   "scale": "secuencial",
-   "direction": "mejor",
-   "family": "verde"
   }
  ]
 }
